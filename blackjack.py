@@ -19,10 +19,19 @@ def write_money_file(current_money):
 def get_deck_list():
     suit= ["Hearts", "Diamonds", "Clubs", "Spades"]
     rank=["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
-    point=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
-    choice=random.choice(suit)
-    choice_2=random.choice(rank)
-    print(f"{choice_2} of {choice}")
+    point_value=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    """suit_choice=random.choice(suit)
+    rank_choice=random.choice(rank)
+    print(f"{rank_choice} of {suit_choice}")"""
+    deck=[]
+    for suits in suit:
+        for ranks in rank:
+            point=point_value
+            deck.append([ranks, suits, point])
+        random.shuffle(deck)
+
+
+    print(deck)
 
 
 
@@ -30,7 +39,7 @@ def get_deck_list():
 
 
 def main():
-    get_deck_lis()
+    get_deck_list()
 
 if __name__=="__main__":
     main()
