@@ -70,18 +70,39 @@ def validate_bet_amount(money_amount):
             print("invalid input, enter either y or n")
     return money_amount
 
-"""def get_bet(money_amount):
+def get_bet(money_amount):
     min_bet= 5
     max_bet = 1000
-    current_money= money_amount
-    bet_input = input(f"Bet amount (minimum{min_bet} to max{max_bet}:   ")
-    bet"""
+    while True:
+        bet_input = input(f"Bet amount (minimum{min_bet} to max{max_bet}):   ")
+        try:
+            bet= float(bet_input)
+        except ValueError:
+            print("Please enter a valid integer or a float value for bet amount")
+            continue
+
+        if bet < min_bet:
+            print(f"The minimum bet should be {min_bet}")
+            continue
+        if bet > max_bet:
+            print(f"The maximum bet should be {max_bet}")
+            continue
+        if bet > money_amount:
+            print(f"The bet cannot be bigger than the player's current money{money_amount} amount")
+            continue
+
+        return bet
+
 
 
 def main():
     print("BLACKJACK")
     print("Blackjack payout is 3:2")
     money_amount= db.read_money()
+    money_amount= validate_bet_amount(money_amount)
+    print(f"Money:  {money_amount}")
+    player_bet=get_bet(money_amount)
+    print(f"Bet amount: {player_bet}")
     suit= ["Hearts", "Diamonds", "Clubs", "Spades"]
     rank=["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
     point_value=[2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]
@@ -96,8 +117,6 @@ def main():
     card_points=get_hand_points(single_card_hand)
     print(f"points for the drawn card is: {card_points}")
 
-    test_fund = 2
-    validate_bet_amount(test_fund)
 
 
 if __name__=="__main__":
