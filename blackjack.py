@@ -156,42 +156,46 @@ def define_winner(player_hand, dealer_hand, player_over_21, dealer_over_21, bet,
     return money
 
 def main():
-    """print("BLACKJACK!")
+    print("BLACKJACK!")
     print("Blackjack payout is 3:2")
-    print()
-
-    money_amount= db.read_money()
-    money_amount= validate_bet_amount(money_amount)
-    print(f"Money:  {money_amount}")
-    player_bet=get_bet(money_amount)
-    print(f"Bet amount: {player_bet}")
     print()
 
     suit= ["Hearts", "Diamonds", "Clubs", "Spades"]
     rank=["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
     point_value=[2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]
-    full_deck=create_deck_list(suit,rank,point_value)
-    #checking the amount of cards because getting confused if its drawing correctly or not
-    print(f"initial size of deck: {len(full_deck)} ")
-    test_draw=draw_card(full_deck)
-    print(f"Card drawn: {test_draw}")
-    print(f"New deck size:{len(full_deck)}")
-    #testing with a single drawn card
-    single_card_hand= [test_draw]
-    card_points=get_hand_points(single_card_hand)
-    print(f"points for the drawn card is: {card_points}")"""
+    money = initialize_money()
+    while True:
+        money = validate_bet_amount(money)
+        if money <= 0:
+            break
+        print(f"Money: {money}")
+        bet = get_bet(money)
+        money -= bet
+        full_deck = create_deck_list(suit, rank, point_value)
+        random.shuffle(full_deck)
+        player_hand = []
+        dealer_hand = []
+        player_hand.append(draw_card(full_deck))
+        dealer_hand.append(draw_card(full_deck))
+        player_hand.append(draw_card(full_deck))
+        dealer_hand.append(draw_card(full_deck))
+        print(f"Bet amount: {bet}")
+        dealer_show_card = dealer_hand[0]
+        print(f"DEALER'S SHOW CARD: {dealer_show_card[1]} of {dealer_show_card[0]}")
+        print()
+        print("YOUR CARDS:")
+        for card in player_hand:
+            print(f"{player_hand[1]} of {player_hand[0]}")
+        player_over_21 = player_turn(player_hand, full_deck)
+        dealer_over_21 = False
+        if not player_over_21:
+            dealer_over_21 = dealer_turn(dealer_hand, full_deck)
+        money = define_winner(player_hand, dealer_hand, player_over_21, dealer_over_21, bet, money)
+        play_again = input("Play Again? (y/n): ").lower()
+        if play_again != 'y':
+            print("Come Back soon!")
+            print("Bye!")
+            break
 
-
-    current_money_test = 100
-    test_bet = 90
-    test_player_hand = [("Hearts", "5", 5),
-                        ("Spade", "King", 10)]
-    test_dealer_hand = [("Diamonds", "10", 10),
-                        ("Clubs", "5", 5)]
-
-    define_winner(test_player_hand, test_dealer_hand, False, False, test_bet, current_money_test)
-
-
-    
 if __name__=="__main__":
     main()
