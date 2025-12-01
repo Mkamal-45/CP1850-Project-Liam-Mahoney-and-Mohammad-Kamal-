@@ -87,7 +87,6 @@ def get_bet(money_amount):
 
         return bet
 
-
 def dealer_turn(dealer_hand, full_deck):
     for card in dealer_hand:
         print(f"{card[1]} of {card[0]}")
@@ -108,7 +107,7 @@ def player_turn(player_hand, full_deck):
         player_points =get_hand_points(player_hand)
         if player_points > 21:
             return True
-        elif player_points ==21:
+        elif player_points == 21:
             return False
         choice= input ("Hit or stand? (hit/stand):  ").lower()
         if choice == "stand":
@@ -123,17 +122,51 @@ def player_turn(player_hand, full_deck):
         else:
             print("Please type 'hit or 'stand' ")
 
-
-
+def define_winner(player_hand, dealer_hand, player_over_21, dealer_over_21, bet, money):
+    player_points = get_hand_points(player_hand)
+    dealer_points = get_hand_points(dealer_hand)
+    print(f"YOUR POINTS: {player_points}")
+    print(f"DEALER'S POINTS: {dealer_points}")
+    if player_over_21:
+        print("Sorry, You Lose")
+        winnings = 0
+    elif player_points == 21 and len(player_hand) == 2:
+        if dealer_points == 21 and len(dealer_hand) == 2:
+            print("It's a Tie!")
+            winnings = bet
+        else:
+            print("You Win! 3:2!!!")
+            payout = bet * 1.5
+            winnings = bet + payout
+    elif dealer_over_21:
+        print("You Win! 3:2!!!")
+        winnings = bet * 2
+    elif dealer_points > player_points:
+        print("Sorry, You Lose")
+        winnings = 0
+    elif player_points > dealer_points:
+        print("You Win!")
+        winnings = bet * 2
+    elif player_points == dealer_points:
+        print("It's a Tie!")
+        winnings = bet
+    money += winnings
+    db.write_money(str(money))
+    print(f"Money: {money}")
+    return money
 
 def main():
-    print("BLACKJACK")
+    print("BLACKJACK!")
     print("Blackjack payout is 3:2")
+    print()
+
     money_amount= db.read_money()
     money_amount= validate_bet_amount(money_amount)
     print(f"Money:  {money_amount}")
     player_bet=get_bet(money_amount)
     print(f"Bet amount: {player_bet}")
+    print()
+
     suit= ["Hearts", "Diamonds", "Clubs", "Spades"]
     rank=["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
     point_value=[2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, 11]
@@ -147,33 +180,11 @@ def main():
     single_card_hand= [test_draw]
     card_points=get_hand_points(single_card_hand)
     print(f"points for the drawn card is: {card_points}")
-    """player_test_hand= []
-    first_card = draw_card(full_deck)
-    player_test_hand.append(first_card)
 
-    second_card = draw_card(full_deck)
-    player_test_hand.append(second_card)
 
-    player_turn(player_test_hand, full_deck)
     
-    tested player_turn()"""
     
-
-
-
-
-
-
-
+    """tested player_turn()"""
+    
 if __name__=="__main__":
     main()
-
-
-
-
-
-
-
-
-
-
