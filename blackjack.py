@@ -156,7 +156,7 @@ def define_winner(player_hand, dealer_hand, player_over_21, dealer_over_21, bet,
     return money
 
 def main():
-    print("BLACKJACK!")
+    """print("BLACKJACK!")
     print("Blackjack payout is 3:2")
     print()
 
@@ -179,12 +179,19 @@ def main():
     #testing with a single drawn card
     single_card_hand= [test_draw]
     card_points=get_hand_points(single_card_hand)
-    print(f"points for the drawn card is: {card_points}")
+    print(f"points for the drawn card is: {card_points}")"""
 
 
-    
-    
-    """tested player_turn()"""
+    current_money_test = 100
+    test_bet = 90
+    test_player_hand = [("Hearts", "5", 5),
+                        ("Spade", "King", 10)]
+    test_dealer_hand = [("Diamonds", "10", 10),
+                        ("Clubs", "5", 5)]
+
+    define_winner(test_player_hand, test_dealer_hand, False, False, test_bet, current_money_test)
+
+
     
 if __name__=="__main__":
     main()
