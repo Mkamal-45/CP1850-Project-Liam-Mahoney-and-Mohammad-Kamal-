@@ -185,7 +185,7 @@ def main():
         print()
         print("YOUR CARDS:")
         for card in player_hand:
-            print(f"{player_hand[1]} of {player_hand[0]}")
+            print(f"{card[1]} of {card[0]}")
         player_over_21 = player_turn(player_hand, full_deck)
         dealer_over_21 = False
         if not player_over_21:
